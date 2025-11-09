@@ -612,9 +612,11 @@ This is a conditional probability, not a joint probability
 	1. eg. 三个数据为 0.05, 0.1, 0.05, 那么占比分别是 0.25, 0.5, 0.25
 3. 分别相乘对应的y，并且把所有结果加起来
 #### Law of Iterated Expectation
-$$ E[E(Y|X)] = E(Y) $$
+$E[E(Y|X)] = E(Y)$
 If X is collection of countable events that are mutually exclusive and collectively exhaustive, then 
-$$ E(Y) = \sum_{x \in X} E(Y | X = x) P(X = x) $$
+
+ $E(Y) = \sum_{x \in X} E(Y | X = x) P(X = x)$
+
 This is because expected value is a weighted average of all possible values of the random variable, so if we address all the possible values of the expected value of Y given X and weight those values by the probability of X, we should get back to Y itself
 
 ## Lesson 13: The Line of Best Fit
@@ -624,14 +626,14 @@ Define the predicted value of y as $\hat y = \hat b_0 + \hat b_1x_i$
 
 #### Residuals 
 The prediction error for a value of y is defined as the difference between the actual value and the predicted value
-$$ y_i - \hat y_i $$
+$y_i - \hat y_i$
 We will usually refer to this value as a **residual**
 
 We should focus on minimizing the squared residuals
 
 ### Calculating the line of best fit
 Minimizing the mean squared error of the line of best fit
-$$ Q(b_0, b_1) = \frac{1}{n} \sum_{i=1}^{n} (y_i - b_0 - b_1x_i)^2 $$
+$Q(b_0, b_1) = \frac{1}{n} \sum_{i=1}^{n} (y_i - b_0 - b_1x_i)^2$
 The $b_0$ and $b_1$ that minimize the function will be denoted $\hat b_0$ and $\hat b_1$ respectively 
 > This method can only be imposed for one sample of data
 
@@ -643,34 +645,34 @@ The sample must be **representative** of the target population
 1. A representative sample is a subset of a population that seeks to reflect the characteristic of the larger group(population) accurately
 
 #### population Regression Line
-$$E(Y|X) = \arg \min_{f(X)} E\left[(Y - f(X))^2\right]$$
+$E(Y|X) = \arg \min_{f(X)} E\left[(Y - f(X))^2\right]$
 
-We can assume that X predicts Y **linearly** and so as to represent $E(Y|X)$ by $$ E(Y|X) = \beta_0 + \beta_1X $$
+We can assume that X predicts Y **linearly** and so as to represent $E(Y|X)$ by $E(Y|X) = \beta_0 + \beta_1X$
 This is the population regression line(model)
 
 Since the random variable Y cannot exactly follow this relationship, we have to add model Y with error
-$$  E(Y|X) = \beta_0 + \beta_1X + U $$
+$E(Y|X) = \beta_0 + \beta_1X + U$
 U is the error term which accounts for all other factors that could influence Y outside of X, we will assume $E(U|X) = 0$, because
-$$ E(Y|X) = E[E(Y|X)|X] + E(U|X) $$
-$$ E(Y|X) = E(Y|X) + E(U|X) $$
-$$ E(Y|X) - E(Y|X) = E(U|X) = 0 $$
+$E(Y|X) = E[E(Y|X)|X] + E(U|X)$
+$E(Y|X) = E(Y|X) + E(U|X$
+$E(Y|X) - E(Y|X) = E(U|X) = 0$
 Use the law of iterated expectations, we can find out that 
-$$E(U) = E[E(U|X)] = E(0) = 0 $$
+$E(U) = E[E(U|X)] = E(0) = 0$
 #### Linear Regression Model
 $\beta_0$ and $\beta_1$ are **unknown** population parameters
 $\beta_0$ and $\beta_1$ are usually called the regression coefficients
 $\beta_0$ is the expected value of Y when X = 0: E(Y|X=0)
 $\beta_1$ represents the changes in E(Y|X) 
-$$ \frac{\partial}{\partial X} E(Y|X) = \frac{\partial}{\partial X} (\beta_0 + \beta_1 X) = \beta_1$$
+$\frac{\partial}{\partial X} E(Y|X) = \frac{\partial}{\partial X} (\beta_0 + \beta_1 X) = \beta_1$
 E(Y|X) is the best predictor of X in that it minimizes the mean squared error for a prediction of Y
-$$ E(Y|X) = \arg \min_{f(X)} E\left([Y - f(X)]^2\right)$$
+$E(Y|X) = \arg \min_{f(X)} E\left([Y - f(X)]^2\right)$
 Therefore, since we have imposed linearity:
-$$ (\beta_0, \beta_1) = \arg \min_{b_0, b_1} E\left([Y - b_0 - b_1 X]^2\right)$$
+$(\beta_0, \beta_1) = \arg \min_{b_0, b_1} E\left([Y - b_0 - b_1 X]^2\right)$
 
 I can be shown that:
 
-$$ \beta_0 = E(Y) - \beta_1E(X) $$
-$$\beta1 = \frac{E([x-E(x)][Y - E(Y)])}{E([X-E(X)]^2)} = \frac{Cov(X,Y)}{Var(x)} = r_{XY}\frac{S_Y}{S_X} $$
+$\beta_0 = E(Y) - \beta_1E(X)$
+$\beta1 = \frac{E([x-E(x)][Y - E(Y)])}{E([X-E(X)]^2)} = \frac{Cov(X,Y)}{Var(x)} = r_{XY}\frac{S_Y}{S_X}$
 $r_{XY}$: coefficient of x and y
 $S_Y$, $S_X$: standard deviation of Y and X
 
@@ -693,7 +695,7 @@ $\beta_1 = \frac{E([X_i - E(X_i)][Y_i - E(Y_i)])}{E([X_i - E(X_i)]^2)} = \frac{C
 **Ordinary Least Squares** 
 
 Ordinary least squares is just minimizing the mean squared error assuming a linear relationship
-$$ (\hat\beta_0, \hat\beta_1) = \arg \min_{b_0, b_1} \frac{1}{n}\sum_{i=1}^n\left([Y_i - b_0 - b_1 X_i]^2\right) $$
+$(\hat\beta_0, \hat\beta_1) = \arg \min_{b_0, b_1} \frac{1}{n}\sum_{i=1}^n\left([Y_i - b_0 - b_1 X_i]^2\right)$
 
 Ordinary Least Squares is just minimizing the mean squared error assuming a linear relationship
 $\hat\beta_0 = \bar Y - \hat\beta_1 \bar X$                                         $\hat\beta_1 = \frac{\sum_{i=1}^n (X_i-\bar X)(Y_i - \bar Y)}{\sum_{i = 1}^n (X_i - \bar X)^2}$
@@ -718,7 +720,7 @@ We're already assuming that E(Y|X) is a linear function, and we still need 5 ass
 #### Assumption 1
 > **OLS1**: X and Y have finite second moments
 > E($X^2$) and E($Y^2$) and
-> $$ E(Y|X) = \beta_0 + \beta_1X $$
+> $E(Y|X) = \beta_0 + \beta_1X$
 Note that linearity is primarily in the **parameters**, not the variables, which means that $Y = \beta_0 + \beta_1X^2 + U$ is a valid linear model, but $Y=\beta_0 +\beta_1^2X + U$ is not 
 
 Assumption OLS1 implies that our postulated model is correct:
@@ -745,7 +747,7 @@ Thus, $E(\hat \beta_0) = \beta_0$ $E(\hat \beta_1) = \beta_1$
 However, **Unbiasedness does not mean precision**
 
 #### Assumption 4
-OLS 4: The population model $$ Y = \beta_0 + \beta_1X + U$$
+OLS 4: The population model $Y = \beta_0 + \beta_1X + U$
 has conditions on U such that $U \textasciitilde (0, \sigma^2)$
 Note that $\sigma^2$ is a constant value
 The constant variance of the error term is referred to as **homoskedasticity**
@@ -754,7 +756,7 @@ This means that the variance is $\sigma_i^2$ rather than $\sigma^2$, as the vari
 The standard errors of $\hat \beta_0$ and $\hat \beta_1$(and their realizations) are unreliable as a result
 
 #### Assumption 5
-> OLS 5: The population model $$ Y = \beta_0 + \beta_1X + U$$
+> OLS 5: The population model $Y = \beta_0 + \beta_1X + U$
 > has conditions on U such that $U \textasciitilde N(0, \sigma^2)$
 
 This is very similar to OLS 4 except we now impose that the errors have a normal distribution
@@ -763,12 +765,13 @@ This is very similar to OLS 4 except we now impose that the errors have a normal
 
 ### Hypothesis Testing in Simple Linear Regression
 We can find the total variation in our model due to errors by summing the square of our residuals:
-$$ RSS = \sum_{i=1}^{n}(Y_i-\hat Y_i)^2$$
+
+$RSS = \sum_{i=1}^{n}(Y_i-\hat Y_i)^2$
 
 We could use the mean squared error as our estimate our variance. However, this will not be an unbiased estimator
-$$ MSE = \frac{1}{n}\sum_{i=1}^{n}(y_i-\hat y_i)^2 $$
+$MSE = \frac{1}{n}\sum_{i=1}^{n}(y_i-\hat y_i)^2$
 Sample variance estimator:
-$$\frac{1}{n-1}\sum_{i=1}^{n}(X_i - \bar X)^2$$
+$\frac{1}{n-1}\sum_{i=1}^{n}(X_i - \bar X)^2$
 
 We would use $\mu$ instead of $\bar X$ if we could, but we do not know the true population mean, so we have to estimate it
 
@@ -776,16 +779,16 @@ We are estimating two population parameters in a simple linear regression model:
 $\beta_0$ and $\beta_1$
 
 An **unbiased estimator** for the variance of the regression model is:
-$$\frac{1}{n-2}\sum_{i=1}^{n}(Y_i - \hat Y_i)^2 $$
+$\frac{1}{n-2}\sum_{i=1}^{n}(Y_i - \hat Y_i)^2$
 
 With the corresponding estimate replacing the random variables with the values observed through data and estimation, another way to represent the unbiased estimator for the variance of the regression model is:
-$$ \sigma^2 = \frac{RSS}{n-2}$$
+$\sigma^2 = \frac{RSS}{n-2}$
 
 #### Test Statistic
 When we assume the data comes from a normal distribution, we can construct test statistics similar to how we constructed them for population means and proportions:
-$$ \frac{\hat \beta_i - \beta_i}{\hat {se}(\hat \beta_i)} = t_{stat}$$
+$\frac{\hat \beta_i - \beta_i}{\hat {se}(\hat \beta_i)} = t_{stat}$
 #### The Central Limit Theorem(CLT)
-Let $Z_1, Z_2, ... , Z_n$ be a sample of n independent and identically distributed random variables with mean $\mu$ and variance $\sigma^2$. Both $\mu$ and $\sigma^2$ are finite numbers and $\sigma^2 > 0$. Therefore, as $n \to \infty$(the sample size tends to infinity), the random variable $$\sqrt{n}\frac{\bar Z - \mu}{\sigma}$$
+Let $Z_1, Z_2, ... , Z_n$ be a sample of n independent and identically distributed random variables with mean $\mu$ and variance $\sigma^2$. Both $\mu$ and $\sigma^2$ are finite numbers and $\sigma^2 > 0$. Therefore, as $n \to \infty$(the sample size tends to infinity), the random variable $\sqrt{n}\frac{\bar Z - \mu}{\sigma}$
 converges to a $N(0,1)$ random variable
 
 - Thus, so long as our sample size n is large, we can ignore OLS 5 when it comes to performing tests for regression **coefficients**
@@ -812,8 +815,10 @@ The p-value for the F-statistic is the same as the p-value for the t-statistic o
 
 ### Confidence Intervals for Regression Coefficients
 The confidence interval formulas for our regression coefficients can be easily calculated from the test statistic formulas
-$$ \frac{\hat \beta_i - \beta_i}{\hat{se}(\hat \beta_i)} = \pm t_{n-2} $$
-$$ \to \beta_i = \hat \beta_i \pm t_{n-2} \hat{se}(\hat \beta_i) $$
+
+$\frac{\hat \beta_i - \beta_i}{\hat{se}(\hat \beta_i)} = \pm t_{n-2}$
+$\to \beta_i = \hat \beta_i \pm t_{n-2} \hat{se}(\hat \beta_i)$
+
 This is similar to how we calculate confidence intervals for sample means
 
 $t^*$ of the $t_{n-2}$ will not be shown in the table of the r output, so we have to calculate it
@@ -837,7 +842,7 @@ Observation i's **leverage** is defined as $\frac{1}{n}\frac{(x_i - \bar x)^2}{\
 High leverage observations should result in wider confidence intervals
 
 > A confidence interval for the average of Y when X = x is given by
-> $$\hat{y} \pm t^* \hat{\sigma} \sqrt{\frac{1}{n} + \frac{(x - \bar{x})^2}{\sum_{j=1}^{n} (x_j - \bar{x})^2}} $$
+> $\hat{y} \pm t^* \hat{\sigma} \sqrt{\frac{1}{n} + \frac{(x - \bar{x})^2}{\sum_{j=1}^{n} (x_j - \bar{x})^2}}$
 > - $\hat y$ is the predicted value of Y given X = x
 > - $t^*$ is the relevant critical value from the corresponding distribution $t_{n-2}$ or $N(0,1)$ 
 > - $\hat \sigma$ is the estimate of the standard error of the regression model
@@ -850,8 +855,8 @@ The following things affect the width of the confidence intervals:
 Between all potential 100(1-$\alpha$)%, the only term that vary are $\hat y$(the estimated value) and $(x_i - \bar x)^2$(part of the leverage)
 
 Confidence interval is for the conditional mean and is not a prediction interval, which means that 
-$$ E(Y|X) = \beta_0 + \beta_1X $$
-but $$ Y = \beta_0 + \beta_1X + U $$
+$E(Y|X) = \beta_0 + \beta_1X$
+but $Y = \beta_0 + \beta_1X + U$
 We require a different type of interval to look for one new value Y
 
 #### Prediction Intervals
@@ -861,12 +866,12 @@ We require a different type of interval to look for one new value Y
 
 We wish to find a prediction interval for $Y|X = \mathbb{E}(Y|X) + U$
 $\mathbb{E}(Y|X)$ has a confidence interval that follows the distribution
-$$N(\hat{Y}, \sigma^2 \left[\frac{1}{n} + \frac{(X_i - \bar{X})^2}{\sum_{j=1}^{n} (X_j - \bar{X})^2}\right])$$
+$N(\hat{Y}, \sigma^2 \left[\frac{1}{n} + \frac{(X_i - \bar{X})^2}{\sum_{j=1}^{n} (X_j - \bar{X})^2}\right])$
 Since $U\sim N(0, \sigma^2)$ under OLS 5,
-$$ Y | X = N\left(\hat{Y}, \sigma^2 \left[\frac{1}{n} + \frac{(X_i - \bar{X})^2}{\sum_{j=1}^{n} (X_j - \bar{X})^2}\right]\right) + N(0, \sigma^2)$$
-$$ Y | X = N\left(\hat{Y}, \sigma^2 \left[1 + \frac{1}{n} + \frac{(X_i - \bar{X})^2}{\sum_{j=1}^{n} (X_j - \bar{X})^2}\right]\right)$$
+$Y | X = N\left(\hat{Y}, \sigma^2 \left[\frac{1}{n} + \frac{(X_i - \bar{X})^2}{\sum_{j=1}^{n} (X_j - \bar{X})^2}\right]\right) + N(0, \sigma^2)$
+$Y | X = N\left(\hat{Y}, \sigma^2 \left[1 + \frac{1}{n} + \frac{(X_i - \bar{X})^2}{\sum_{j=1}^{n} (X_j - \bar{X})^2}\right]\right)$
 > A prediction interval for one Y when X=x is given by
-> $$ \hat{y} \pm t^* \hat{\sigma} \sqrt{1 + \frac{1}{n} + \frac{(x - \bar{x})^2}{\sum_{j=1}^{n}(x_j - \bar{x})^2}}$$
+> $\hat{y} \pm t^* \hat{\sigma} \sqrt{1 + \frac{1}{n} + \frac{(x - \bar{x})^2}{\sum_{j=1}^{n}(x_j - \bar{x})^2}}$
 > - $\hat y$ is the predicted value of Y given X = x
 > - $t^*$ is the relevant critical value from the corresponding distribution $t_{n-2}$ or N(0, 1)
 > - $\hat \sigma$ is the estimate of the standard error of the regression model
@@ -877,13 +882,12 @@ $$ Y | X = N\left(\hat{Y}, \sigma^2 \left[1 + \frac{1}{n} + \frac{(X_i - \bar{X}
 $\beta_0 = E(Y) - \beta_1E(X)$
 $\beta_1 = \frac{Cov(X,Y)}{Var(X)}$
 If X is multiplied by a non-zero constant "a",
-$$\beta_1 = \frac{Cov(X,Y)}{Var(X)} = \frac{E[(X-E(X))(Y-E(Y))]}{E[(X-E(X))^2]}$$
-$$\hat\beta_1 = \frac{Cov(aX,Y)}{Var(aX)} = \frac{E[(aX-E(aX))(Y-E(Y))]}{E[(aX-E(aX))^2]} $$
-$$\hat\beta_1 =  \frac{1}{a}\beta_1$$
+$\beta_1 = \frac{Cov(X,Y)}{Var(X)} = \frac{E[(X-E(X))(Y-E(Y))]}{E[(X-E(X))^2]}$
+$\hat\beta_1 = \frac{Cov(aX,Y)}{Var(aX)} = \frac{E[(aX-E(aX))(Y-E(Y))]}{E[(aX-E(aX))^2]}$
+$\hat\beta_1 =  \frac{1}{a}\beta_1$
 Same analysis for bY as well
-$$ \hat\beta_1 = b\beta_1$$
-$$ \hat \beta_0 = b\beta_0 $$
-
+$\hat\beta_1 = b\beta_1$
+$\hat \beta_0 = b\beta_0$
 
 ### Nonlinearities
 OLS1 assumed that $E[Y|X]$ is a linear function of X
@@ -894,7 +898,7 @@ Suppose that E(Y|X) = $\sqrt X$
 If we assume that E(Y|X) = $\beta_0 + \beta_1 X$, our line of best fit will not match the data
 Let Z = $\sqrt X$
 E(Y|Z) = $\beta_0 + \beta_1Z$ At $\beta_0 = 0$ and $\beta_1 = 1$, $E(Y|Z) = Z = \sqrt X$
-If the analysis of the assumptions raises some potential issues of assuming that Y and X have a linear relationship, which means that $$E(Y|X) \neq \beta_0 + \beta_1X$$
+If the analysis of the assumptions raises some potential issues of assuming that Y and X have a linear relationship, which means that $E(Y|X) \neq \beta_0 + \beta_1X$
 We can try E(Y|X) = $X^2$
 
 Since $X^2$ is not a linear function of X
@@ -947,14 +951,14 @@ Thus the **estimator from the regression model** is the **sample average of Y**
 
 `Total Sum of Squares(TSS)`
 If $\bar Y$ is out estimator, then the total variation in Y can be described by
-$$ TSS = \sum_{i = 1}^{n}(Y_i - \bar Y)^2$$ 
+$TSS = \sum_{i = 1}^{n}(Y_i - \bar Y)^2$ 
 
 `Total amount of error in the linear regression model:`
-$$ RSS = \sum_{i = 1}^{n} (Y_i - \hat Y_i)^2$$
+$RSS = \sum_{i = 1}^{n} (Y_i - \hat Y_i)^2$
 Using the error of the linear regression model to the error of the sample average to establish how well a model fits
 
 $R^2$ is the **proportion(or percentage) of the variance in Y that is explained by the independent variables**
-$$ R^2 = 1 -\frac{RSS}{TSS}$$
+$R^2 = 1 -\frac{RSS}{TSS}$
 `1 - unexplained variation = explained variation`
 
 
@@ -963,17 +967,17 @@ $\to$ As long as the MSEs for the estimators are calculated with the same denomi
 
 `ESS` -- Explained Sum of Squares
 	This is the variation in Y that is explained by the regression line
-	$$ ESS = \sum_{i=1}^{n}(\hat Y_i - \bar Y)^2 $$
+	$ESS = \sum_{i=1}^{n}(\hat Y_i - \bar Y)^2$
 	Since $TSS = RSS + ESS$
 	The total variation in Y can be decomposed to the unexplained variation RSS and the explained variation $ESS$
 	So
-	$$ R^2 = \frac{ESS}{TSS}$$
+	$R^2 = \frac{ESS}{TSS}$
 
 Worst estimator $\to \bar Y$
 If $RSS = TSS(\hat Y_i = \bar Y \forall i$ then $R^2$ is 0, X adds nothing to the prediction of Y
 
 Best possible estimator $\to \hat Y_i = Y_i \forall i$
-$$ RSS = \sum_{i = 1}^{n} (Y_i - \hat Y_i)^2 = \sum_{i = 1}^{n} (Y_i -  Y_i)^2 = 0 $$
+$RSS = \sum_{i = 1}^{n} (Y_i - \hat Y_i)^2 = \sum_{i = 1}^{n} (Y_i -  Y_i)^2 = 0$
 So, $R^2$ = 1
 
 - Thus, the scope of $R^2$ is $0 \leq R^2 \leq 1$
@@ -987,24 +991,23 @@ r - denote the correlation coefficient between two variables
 if r is the correlation between X and Y, then $r^2 = R^2$
 This means that we can use $R^2$(or $r$) to solve for $r$ (or $R^2$) for simple linear regression only
 
-$$ r = \sqrt {R^2}$$
+$r = \sqrt {R^2}$
 
 **Be careful about the sign of r**
 We know that $\hat b_1 = r\frac{s_y}{s_x}$, since r is the only value that can be negative, if the slope is negative, then **r must be as well**
 
 ### More on the F-Statistic
 The F-Statistic can be calculates as
-$$ F = \frac{ESS/p}{RSS/(n-p-1)}$$
+$F = \frac{ESS/p}{RSS/(n-p-1)}$
 - p represents the number of independent variables
 - For the simple linear regression model, p = 1
 - F-statistics have two degrees of freedom, whatever divide by in the numerator is the first one, and the second one is whatever divide by the denominator
 Also,
-$$ F = t^2$$
+$F = t^2$
 To find t by F-statistic, we can do 
-$$ t = \sqrt{F}$$
+$t = \sqrt{F}$
 But be careful with the sign, if the **slope if negative**, we need to do 
-$$ t = -\sqrt{F}$$
-
+$t = -\sqrt{F}$
 
 
 ## Additional Stuff:
