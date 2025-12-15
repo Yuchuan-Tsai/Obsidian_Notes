@@ -690,7 +690,7 @@ $\beta_1$ represents the changes in E(Y|X)
 E(Y|X) is the best predictor of X in that it minimizes the mean squared error for a prediction of Y
 	$E(Y|X) = \arg \min_{f(X)} E\left([Y - f(X)]^2\right)$
 Therefore, since we have imposed linearity:
-	$(\beta_0, \beta_1) = \arg \min_{b_0, b_1} E\left([Y - b_0 - b_1 X]^2\right)$
+	$(\hat\beta_0, \hat\beta_1) = \arg \min_{b_0, b_1} E\left([Y - b_0 - b_1 X]^2\right)$
 
 It can be shown that:
 > $\beta_0 = E(Y) - \beta_1E(X)$
@@ -1066,5 +1066,264 @@ $t = -\sqrt{F}$
 $\bar Y$ -- Average
 $\hat Y$ -- Best fit one
 $Y$ -- the point not in the line 
+
+
+## Lesson 20 Midterm II Review
+### Joint Distribution
+Two things make joint distribution valid:
+1. $P(X = x, Y = y) \geq 0$
+2. $\sum_{i=1}^{m} \sum_{j=1}^{n} P(X = x_i, Y = y_j) = 1$
+
+### Cov and Corr
+`Covariance` - how X and Y related with each other -- it does not tell how strong is the linear relationship, we have to normalize it
+Using `Correlation` can help us solving the scaling issue of the covariance
+
+#### Calculation of Cov and Corr
+1. if X is scaled by a constant $a$, then Cov($a$X, Y) = $a$Cov(X, Y)
+	1. Cov $\to$ $E((X-E(X))(Y-E(Y)))= E(XY) - E(X)E(Y)$
+2. Var($a$X) = $a^2$Var(x) $\to$ SD($a$X) = $a$SD(X)
+3. $corr(aX, Y) = \frac{aCov(X, Y)}{aSD(X)SD(Y)} = \frac{Cov(X, Y)}{SD(X)SD(Y)} = corr(X, Y)$
+### Conditional Probability
+$P(X=x | Y=y) = \frac{P(X=x, Y=y)}{P(Y=y)}$
+
+
+### Ordinary Least Squares
+unbiased OLS estimator: $E(\hat \beta_j) = \beta_j$
+
+the `estimators` for regression coefficients come from minimizing the mean squared error of the sample data:
+$(\hat\beta_0, \hat\beta_1) = \arg \min_{b_0, b_1} E\left([Y - b_0 - b_1 X]^2\right)$
+
+Since we are using OLS Assumptions 1-4 to calculate our standard error, so if OLS4 has `heteroskedasticity`, we will still have good estimate, but our error is messed up, because the variance of the error is messed up, we have issue with our standard error wrong, which will result in our hypothesis test, confidence interval chunk
+
+Assumption 5 -- 误差项正态分布
+Assumption 5 is needed to calculated the confidence intervals and prediction intervals for possible values of $E(Y|X)$ or Y|X 
+However, Assumption 5 is not required to calculate intervals or perform hypothesis tests about the regression coefficients $\beta_j$
+The Central Limit Theorem allows us to perform tests for $\beta_j$ without a normality assumption
+
+### Hypothesis Test and Confidence Interval in Regression Models
+We using OLS 1-4 to calculate proper standard errors and perform hypothesis test, 
+To test if there's linear relationship:
+$H_0: \beta_1 = 0$
+$H_a: \beta_1 \neq 0$
+	Since $\beta_1 = corr(X,Y)\frac{\sigma_Y}{\sigma_X}$
+	If there is no linear relationship, the covariance will be 0
+
+Variance of the error term $\sigma^2$, we have to estimate it with
+$\hat\sigma^2 = \frac{RSS}{n-p-1}$
+We are using $t_{n-2}$ distribution in this term to estimate a variance when testing for a mean(or regression coefficient) -- we are estimating two parameters, so we are using $t_{n-2}$
+
+Test statistics:
+$t_{stat} = \frac{\hat\beta_1 - \beta_1^*}{se(\hat\beta_1)}$
+$\beta_1^*$ is the assumed value of $\beta_1$ under the null hypothesis
+
+#### Confidence Interval
+$\hat\beta_j \pm t^*se(\hat\beta_j)$
+By hypothesis test, we can know whether the null hypothesis value is in our confidence interval or not
+
+### Confidence intervals vs. Prediction Intervals
+E(Y|X=x) $\to$ a group of data, using confidence interval
+Y|X $\to$ a single value, using prediction interval
+
+### Transformations
+Two types: linear and log transformations
+Linear transformations do not mess with the functional form of our variables, so most interpretations and hypothesis tests remain the same
+Transformation is an approximation, but it allows us to still interpret our coefficients in terms of our original variables of interest
+
+### Goodness of Fit
+one aspect: F-test which tests for the model's overall significance
+Another: same as running a t-test for the slope in simple linear regression, $t_{n-2}^2 = F_{1, n-2}$
+
+$R^2 = 1 - \frac{RSS}{TSS}$
+$TSS =  \sum_{i = 1}^{n} (Y_i - \bar Y)^2$ -- similar to the MSE of the estimator $\bar Y$, which is the best we can do without any information about X
+
+$RSS =  \sum_{i = 1}^{n} (Y_i - \hat Y)^2$ -- residual sum of squares, which is the total variation of $Y_i$ from the estimator $\hat Y_i$, which is the unexplained variation
+
+$R^2$ can be described as the proportion of the variation in Y that can be explained by a linear relationship with X
+The worst $\to$ $R^2 = 0$
+The best $\to$ $R^2 = 1$
+
+## Lesson 21: Multiple Linear Regression
+### Multiple Linear Regression
+#### General Formula:
+$Y_i = \beta_0 + \beta_1X_{1i}+\beta_2X_{2i} + U_i$
+#### Explanation:
+$\beta_j$ is the average change in $Y$ when $X_j$ increases by one unit **holding all other independent variables fixed.**
+#### Estimation:
+$(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2)= \arg\min_{b_0,\, b_1,\, b_2}\frac{1}{n} \sum_{i=1}^n (Y_i - b_0 - b_1 X_{1i} - b_2 X_{2i})^2$
+
+#### Change in OLS 3
+When change to MLR, OLS 3 will be different
+	`Collinear`: If the constant comes from a variable of all ones and the independent variable X is always the same number, then these two variables are collinear $\to$ $X_j = a + bX_i$, where a and b are constants
+If independent variables are collinear, then all observations will have an issue of multicollinearity as well, which means that we cannot recover all of the parameters of interest when we have any of these multicollinearity related issues
+当一个变量可以完全由其他变量算出来，那么就是`Perfect Multicollinearity`
+
+#### OLS Assumptions:
+##### OLS 1:
+$X_j$ and $Y$ have finite second moments
+	$E(X_j^2)$ and $E(Y^2)$ and
+	$E(Y|X_1, ..., X_p) = \beta_0 + \beta_1X + .. + \beta_pXp$
+##### OLS2:
+The realizations of $X_{ji}$ and $Y_i$ are randomly sampled from the population
+##### OLS3:
+There is no perfect collinearity between the X variables
+
+#### OLS Assumptions:
+Still, under OLS 1-3 the estimators of $\beta_j$ will be unbiased
+
+##### OLS 4:
+The population model:
+	$Y = \beta_0 + \beta_1X_1 + ... + \beta_pX_p + U$
+	has conditions on $U$ such that $U \sim (0, \sigma^2)$
+This is known as `homoskedasticity`
+If the errors are correlated with values of X then the errors show `heteroskedasticity`
+#### OLS Assumptions
+Under OLS 1-4, proper standard errors can be calculated for the regression coefficients
+$\hat\sigma^2 = \frac{RSS}{n-p-1}$
+The standard errors in the regression output of R will assume homoskedastic errors
+##### OLS 5:
+The population model
+	$Y = \beta_0 + \beta_1X_1 +...+ \beta_pX_p + U$
+	has conditions on $U$ such that $U \sim N(0, \sigma^2)$
+This assumption need errors to be normally distributed
+We do not need normality of errors to calculate proper standard errors for the regression coefficients
+#### OLS Assumptions
+OLS 1-5 will allow us to calculate prediction and confidence intervals for potential values of Y
+	One value $\to$ prediction interval, wider  than confidence interval
+	Mean of all values $\to$ confidence interval
+
+#### Calculating an MLR Model
+Multiple linear regression models allow us to isolate partial effects of variables on the outcome variable of interest
+
+In MLR Model, each coefficient indicates the partial effect of the independent variable while ignoring simultaneous variation in the other variable
+
+### More on Dummy Variables
+
+
+## Lesson 22: Inference and Fit in MLR Models
+#### Hypothesis Testing in MLR Models
+`Test statistic` is the same as test statistic in SLR:
+	$t_{stat} = \frac{\hat\beta_j - \beta_j^*}{se(\hat\beta_j)}$
+`Degree of freedom`: 
+	$n - p -1$
+
+#### Model Fit
+#### R-Squared
+R-squared is the proportion of variability in the outcome variable that is explained by a linear relationship with the independent variables
+$R^2 = 1 - \frac{RSS}{TSS} = 1- \frac{\sum_{i=1}^{n}(Y_i - \hat Y_i)^2}{\sum_{i=1}^{n}(Y_i - \bar Y)^2}$
+	More variables in a model, the RSS of the model will be smaller(or at worst, equal to the RSS of model that contains less variables), so the $R^2$ of model with more variables will be larger
+>  We can technically add as many variables as we want until we create a problem with degrees of freedom (n-p-1)
+>  Too many variables will have the risk of overfitting, but since $R^2$ will only increase or stay the same, we have to use $R_{adj}^2$ to determine whether we have a better model or not
+
+#### Adjusted R-Squared
+We want to penalize $R^2$ depending on the number of variables that we add to the model to discourage overfitting
+$R^2_{\text{adj}} = 1 - \frac{ \text{RSS}/(n - p - 1) }{ \text{TSS}/(n - 1) }= 1 - \frac{\text{RSS}}{\text{TSS}}\left( \frac{n - 1}{n - p - 1} \right)= 1 - (1 - R^2)\left( \frac{n - 1}{n - p - 1} \right)$
+We will want to use adjusted R-squared to evaluate models that have more than one independent variable
+
+- $R_{adj}^2 < R^2$ except when $R^2 = 1$
+- Perfect fit will result in the two measures being equivalent
+- $R_{adj}^2$ **can** be negative
+> We can interpret $R_{adj}^2$ as the proportion of the variation in Y explained by a linear relationship with the independent variables penalizing the model for the number of variables included in the model
+
+#### F-Test
+$F = \frac{ESS/p}{RSS/(n-p-1)}$
+
+`null hypothesis`:
+$H_0: \beta_i = 0 \forall i \in \{1,2,...\}$
+$H_a: H_0$ is not true
+	Notice that the constant term is **not** included in the null hypothesis
+This is the test of **joint** significance for the independent variables in the regression model
+- If we reject the null, there is sufficient evidence to suggest that the independent variables jointly matter when predicting Y
+- If we fail to reject and there is insufficient evidence that the independent variables jointly matter when predicting Y
+
+> This is a one tailed test
+> Since ESS is the explained variation due to the regression model, if ESS is closer to 0, then that means the F statistic will be closer to 0, and if ESS is low, we will fail to reject the null. 
+
+The better ESS is relative to RSS, the higher our test statistic will be $\to$ We want to reject more often because the independent variables matter, so the test will be the upper tail, which is one-tailed
+
+We can find relevant critical values that have $\alpha$ area to the right from an F-distribution with $p$ and $n-p-1$ degrees of freedom and compare our test statistic to this critical value
+
+By multiplying both sides of the fraction by $\frac{1}{TSS}$ to our F-test:
+$F = \frac{ESS/p}{RSS/(n - p - 1)} = \frac{ESS/TSS}{RSS/TSS} \cdot \frac{n - p - 1}{p} = \frac{R^2}{1 - R^2} \cdot \frac{n - p - 1}{p}$
+This test statistic follows an $F_{p, n-p-1}$ distribution
+
+Another way, which is a more general way to write formula is:
+$F = \frac{(ESS_U - ESS_R) / (q)}{RSS_U/(n-p-1)} = \frac{(ESS_U - ESS_R)/1}{(TSS-ESS_U)/(n-p-1)}$
+- $q$ is the number of restrictions, basically number of variables in null hypothesis
+
+
+## Lesson 23: Hypothesis Tests for Multiple Restrictions
+### Deciding the Restrictions to Test
+General restrictions for regressions:
+1. Individual regression coefficients taking a specific value
+2. All slope coefficients taking a value of 0
+3. Some slope coefficients taking a value of 0
+
+Original Model:
+$Y_i = \beta_0 + \beta_1X_i + U_i$
+We need to set that $\beta_0 = 0$ and $\beta_1 = 1$ at the same time to test about whether Y and $\beta_1$ is the exact same, when changing.
+
+Restricted Model for F-test:
+$Y_i = X_i + U_i$
+	Number of restrictions $\to$ 2, one is $\beta_0 = 0$ and the  other is $\beta_1 = 1$
+
+### Performing Tests with Multiple Restrictions
+$F_{stat} = \frac{(RSS_R - RSS_U) / q}{RSS_U/(n-p-1)}$
+q is the number of restrictions
+p is the number of independent variables in the unrestricted model
+
+## Lesson 24: Heteroskedasticity and Building Models
+$(\hat{\beta}_0, \hat{\beta}_1, \hat{\beta}_2)= \arg\min_{b_0, b_1, b_2} \frac{1}{n} \sum_{i=1}^n (Y_i - b_0 - b_1 X_{1i} - b_2 X_{2i})^2$
+
+### Heteroskedasticity
+Heteroskedasticity is the presence of correlation between the errors and the independent variables, which is the opposite of homoskedasticity
+we can denote the variance of heteroskedasticity as $\sigma_i^2$
+
+General formula of variance of error:
+$Var(U) = \mathbb{E}(U^2) - \mathbb{E}(U)^2 = \mathbb{E}(U^2)$
+A model we could use to relate the variance of the errors to our independent variables is 
+$\hat{U}_i^{\,2} = \delta_0 + \delta_1 X_i + \varepsilon_i$
+This is still a linear regression model -- **only for linear model**
+Regressing the squared errors on the regressors of the model is a test known as `Breusch-Pegan` test
+	$H_0$: $\delta_j, j \in \{1, 2, ..., p\} = 0$
+	$H_a$: $H_0$ is not true
+Steps of `Breusch-Pegan` test:
+1. Regress Y on the independent variables
+2. Get the residuals(resid(model) in R)
+3. Square the residuals
+4. Regress the squared residuals on the independent variables from the previous model
+5. Interpret the F-statistic with regards to a hypothesis test
+
+`White Test`: account for different forms of heteroskedasticity by including different functional forms of the independent variables in the model. In particular, we will include all individual terms, squared individual terms, and pairwise interactions of the terms in the original model
+
+If the model is:
+$Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + U_i$
+The White Test will follow the same steps as BP test except the estimated residual model will be:
+$\hat{U}_i^{\,2}= \delta_0+ \delta_1 X_{1i}+ \delta_2 X_{2i}+ \delta_3 X_{1i}^2+ \delta_4 X_{2i}^2+ \delta_5 X_{1i}X_{2i}+ \varepsilon_i$
+
+Number of parameters will be estimated in the squared residual regression by performing the White Test can be calculated as:
+individual terms + squared terms + $\text{intersected terms}\left( \binom{\text{total number}}{\text{number intersected}} \right)$ + constant term
+
+For example:
+Suppose you have a multiple linear regression model with 4 independent variables explaining your dependent variable. How many coefficients will be estimated if you perform the White test for heteroskedasticity for this model?
+#### 项的类型与变量
+
+| 项的类型 (Term Type)     | 变量示例 (Example Variables)           | 数量 (Count) |
+| -------------------- | ---------------------------------- | ---------- |
+| 截距 (Intercept)       | δ₀                                 | 1          |
+| 原始变量 (Original)      | X₁, X₂, X₃, X₄                     | 4          |
+| 平方项 (Squared)        | X₁², X₂², X₃², X₄²                 | 4          |
+| 交叉项 (Cross-Products) | X₁X₂, X₁X₃, X₁X₄, X₂X₃, X₂X₄, X₃X₄ | 6          |
+| 总计 (TOTAL)           |                                    | 15         |
+
+If there is heteroskedastic errors, which means that our standard errors are wrong, and as a result, our hypothesis tests and confidence intervals will all be wrong as well
+
+### Building a Model
+We cannot include any variables that will not have any variation within our sample. This introduces an immediate issue of multicollinearity
+Other than this, we can include whatever we think will help to explain the quantity of interest
+
+
+
+
+
 
 
